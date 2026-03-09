@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maaseva Healthcare - Compassionate Care at Your Doorstep</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" type="image/png" href="logo2.png">
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper"><!-- Animated Background -->
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+   </div><!-- Navigation -->
+   <nav class="nav-container" id="navbar">
+    <div class="nav-inner"><a href="#" class="logo">
+      <div class="logo-icon">
+       <img src="logo2.png" alt="M">
+      </div><span class="logo-text">Maaseva Healthcare</span> </a>
+     <div class="nav-links">
+      <a href="#about" class="nav-link">About</a> 
+      <a href="#services" class="nav-link">Services</a> 
+      <a href="#contact" class="nav-link">Contact</a>
+     </div>
+     <div class="flex items-center gap-4">
+      <a href="#contact" class="nav-cta hidden sm:flex">Get Quote</a>
+      <button class="mobile-toggle" id="menuToggle" onclick="toggleMobileMenu()">
+       <div class="hamburger-bar b1"></div>
+       <div class="hamburger-bar b2"></div>
+       <div class="hamburger-bar b3"></div>
+      </button>
+     </div>
+    </div>
+   </nav><!-- Mobile Menu -->
+   <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" class="nav-link" onclick="toggleMobileMenu()">About</a> 
+    <a href="#services" class="nav-link" onclick="toggleMobileMenu()">Services</a> 
+    <a href="#contact" class="nav-link" onclick="toggleMobileMenu()">Contact</a> 
+    <a href="#contact" class="nav-cta" onclick="toggleMobileMenu()">Get Quote</a>
+    <div class="mobile-socials">
+     <a href="#"><i class="fab fa-facebook-f"></i></a>
+     <a href="#"><i class="fab fa-instagram"></i></a>
+     <a href="https://wa.me/916361376521"><i class="fab fa-whatsapp"></i></a>
+    </div>
+   </div><!-- Hero Section -->
+   <section class="hero" id="hero">
+    <div class="hero-content">
+     <div class="hero-badge"><span class="hero-badge-dot"></span> Trusted Healthcare Partner in Pune
+     </div>
+     <h1 class="hero-title" id="heroTitle">Compassionate <span class="hero-title-accent">Healthcare</span> at Your Doorstep</h1>
+     <p class="hero-subtitle" id="heroSubtitle">Your Health, Our Priority. Providing high-quality, professional nursing staff for specialized home care.</p>
+     <div class="hero-buttons"><a href="#services" class="btn-primary">
+       <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+       </svg> Explore Services </a> <a href="#contact" class="btn-secondary">
+       <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+       </svg> Contact Us </a>
+     </div>
+     <div class="stats-bar">
+      <div class="stat-item">
+       <div class="stat-number">
+        500+
+       </div>
+       <div class="stat-label">
+        Happy Families
+       </div>
+      </div>
+      <div class="stat-item">
+       <div class="stat-number">
+        50+
+       </div>
+       <div class="stat-label">
+        Expert Nurses
+       </div>
+      </div>
+      <div class="stat-item">
+       <div class="stat-number">
+        24/7
+       </div>
+       <div class="stat-label">
+        Care Support
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- About Section -->
+   <section class="about-section" id="about">
+    <div class="about-container">
+     <div class="about-content"><span class="section-label">About Us</span>
+      <h2 class="section-title" id="aboutTitle">Compassionate Care You Can Trust</h2>
+      <p class="section-text">Maaseva Healthcare is renowned for providing professional nursing staff who deliver unparalleled services. We aim to build lasting relationships through dedicated patient care and personalized attention.</p>
+      <div class="feature-list">
+       <div class="feature-item">
+        <div class="feature-icon">
+         <i class="fas fa-user-nurse"></i>
+        </div><span class="feature-text">Professional Male &amp; Female Nurses</span>
+       </div>
+       <div class="feature-item">
+        <div class="feature-icon">
+         <i class="fas fa-baby"></i>
+        </div><span class="feature-text">Newborn &amp; Mother Care Specialists</span>
+       </div>
+       <div class="feature-item">
+        <div class="feature-icon">
+         <i class="fas fa-heartbeat"></i>
+        </div><span class="feature-text">Specialized Patient Support 24/7</span>
+       </div>
+      </div>
+     </div>
+     <div class="about-visual">
+      <div class="about-card">
+       <div class="about-card-icon">
+        <i class="fas fa-check-circle"></i>
+       </div>
+       <h3 class="about-card-title">Our Promise</h3>
+       <p class="about-card-text">We are committed to providing exceptional healthcare services with empathy, professionalism, and round-the-clock availability. Your family's well-being is our highest priority.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Services Section -->
+   <section class="services-section" id="services">
+    <div class="services-header"><span class="section-label">Our Services</span>
+     <h2 class="section-title">Comprehensive Healthcare Solutions</h2>
+     <p class="section-text" style="margin-bottom: 0;">We offer a wide range of professional healthcare services tailored to meet your family's unique needs.</p>
+    </div>
+    <div class="services-grid">
+     <a href="service-details.html?service=nursing-staff" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-user-nurse"></i>
+      </div>
+      <h3 class="service-title">Nursing Staff</h3>
+      <p class="service-desc">Trained male and female nurses for 12/24 hour home care.</p>
+     </a>
+     <a href="service-details.html?service=elder-care" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-blind"></i>
+      </div>
+      <h3 class="service-title">Elder Care</h3>
+      <p class="service-desc">Compassionate caretakers following every step according to elder needs.</p>
+     </a>
+     <a href="service-details.html?service=icu-setup" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-procedures"></i>
+      </div>
+      <h3 class="service-title">ICU Home Setup</h3>
+      <p class="service-desc">Critical care equipment including ventilators and monitors for home use.</p>
+     </a>
+     <a href="service-details.html?service=post-op-care" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-heartbeat"></i>
+      </div>
+      <h3 class="service-title">Post-Operative Care</h3>
+      <p class="service-desc">Professional assistance during the crucial recovery period after surgery.</p>
+     </a>
+     <a href="service-details.html?service=specialized-care" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-wheelchair"></i>
+      </div>
+      <h3 class="service-title">Specialized Patient Care</h3>
+      <p class="service-desc">Expert care for bed-ridden, neurological, and paralytic patients.</p>
+     </a>
+     <a href="service-details.html?service=injection-visit" class="service-card">
+      <div class="service-icon">
+       <i class="fas fa-syringe"></i>
+      </div>
+      <h3 class="service-title">Injection Visit</h3>
+      <p class="service-desc">Professional injection services delivered at home by qualified nursing staff.</p>
+     </a>
+    </div>
+   </section><!-- Contact Section -->
+   <section class="contact-section" id="contact">
+    <div class="contact-container">
+     <div class="contact-content"><span class="section-label">Get in Touch</span>
+      <h2 class="section-title">Let's Talk About Your Care Needs</h2>
+      <p class="section-text">Ready to experience compassionate healthcare? Reach out to us and our team will help you find the perfect care solution for your family.</p>
+      <div class="contact-info">
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-phone-alt"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">
+          Phone
+         </div>
+         <div class="contact-card-text" id="phoneText">
+          +91 6361376521
+         </div>
+        </div>
+       </div>
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-envelope"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">
+          Email
+         </div>
+         <div class="contact-card-text" id="emailText">
+          maasevahealthcare@gmail.com
+         </div>
+        </div>
+       </div>
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">
+          Location
+         </div>
+         <div class="contact-card-text">
+          All over Pune, Maharashtra, India
+         </div>
+        </div>
+       </div>
+       <div class="contact-socials">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+       </div>
+      </div>
+     </div>
+     <div class="contact-form-wrapper">
+      <h3 class="form-title">Request a Callback</h3>
+      <p class="form-subtitle">Fill in your details and we'll get back to you shortly.</p>
+      <form id="enquiryForm" action="https://api.web3forms.com/submit" method="POST">
+       <input type="hidden" name="access_key" value="b1955e71-d374-4f03-ae4e-f6249aa638ef">
+       <div class="form-row">
+        <div class="form-group"><label class="form-label" for="firstName">First Name</label> <input type="text" name="first_name" id="firstName" class="form-input" placeholder="Frst Name" required>
+        </div>
+        <div class="form-group"><label class="form-label" for="lastName">Last Name</label> <input type="text" name="last_name" id="lastName" class="form-input" placeholder="Last Name" required>
+        </div>
+       </div>
+       <div class="form-group"><label class="form-label" for="email">Email Address</label> <input type="email" name="email" id="email" class="form-input" placeholder="xyz@example.com" required>
+       </div>
+       <div class="form-group"><label class="form-label" for="phone">Phone Number</label> <input type="tel" name="phone" id="phone" class="form-input" placeholder="Phone Number" required>
+       </div>
+       <div class="form-group"><label class="form-label" for="message">How can we help?</label> <textarea name="message" id="message" class="form-input" placeholder="Tell us about your care requirements..."></textarea>
+       </div><button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane mr-2"></i> Send Message </button>
+       <div id="result"></div>
+      </form>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="footer">
+    <div class="footer-content">
+     <div class="footer-text">
+      © 2026 Maaseva Healthcare. All rights reserved.
+     </div>
+     <div class="footer-links"><a href="#" class="footer-link">Privacy Policy</a> <a href="#" class="footer-link">Terms of Service</a> <a href="login.html" class="footer-link">Login</a>
+     </div>
+    </div>
+   </footer><!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/916361376521?text=Hi, I'm interested in your services." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+  <script src="script.js"></script>
+ </body>
+</html>

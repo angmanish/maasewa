@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Maaseva Healthcare</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" type="image/png" href="logo2.png">
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+   </div>
+   
+   <nav class="nav-container">
+    <div class="nav-inner">
+     <a href="index.html" class="logo">
+      <div class="logo-icon">
+       <img src="logo2.png" alt="M">
+      </div>
+      <span class="logo-text">Maaseva Healthcare</span>
+     </a>
+    </div>
+   </nav>
+
+   <section class="min-h-screen flex items-center justify-center px-6 py-20 relative z-10">
+    <div class="contact-form-wrapper w-full max-w-md">
+     <div class="text-center mb-8">
+      <h1 class="form-title">Welcome Back</h1>
+      <p class="form-subtitle">Please enter your details to login</p>
+     </div>
+     
+     <form id="loginForm">
+      <div class="form-group">
+       <label class="form-label" for="email">Email Address</label>
+       <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group">
+       <label class="form-label" for="password">Password</label>
+       <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+      </div>
+      
+      <div class="flex items-center justify-between mb-8">
+       <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="accent-[#00d4aa]">
+        <span class="text-sm text-gray-400">Remember me</span>
+       </label>
+       <a href="#" class="text-sm text-[#00d4aa] hover:underline">Forgot password?</a>
+      </div>
+      
+      <button type="submit" class="btn-submit" id="loginBtn">
+       <i class="fas fa-sign-in-alt mr-2"></i> Login
+      </button>
+
+      <div id="loginMessage" class="mt-4 text-center hidden"></div>
+      
+      <div class="mt-8 text-center text-gray-400">
+       Don't have an account? 
+       <a href="#" class="text-[#00d4aa] font-semibold hover:underline">Sign Up</a>
+      </div>
+     </form>
+    </div>
+   </section>
+
+   <footer class="footer">
+    <div class="footer-content">
+     <div class="footer-text">
+      © 2026 Maaseva Healthcare. All rights reserved.
+     </div>
+     <div class="footer-links">
+      <a href="#" class="footer-link">Privacy Policy</a>
+      <a href="#" class="footer-link">Terms of Service</a>
+      <a href="index.html" class="footer-link">Home</a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script type="module" src="auth.js"></script>
+ </body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Maaseva Healthcare</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-card { background: rgba(15, 40, 71, 0.6); border: 1px solid rgba(232, 244, 248, 0.1); border-radius: 20px; padding: 1.5rem; backdrop-filter: blur(10px); }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 212, 170, 0.3);
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 170, 0.5);
+    }
+  </style>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+   </div>
+   
+   <nav class="nav-container scrolled">
+    <div class="nav-inner">
+     <a href="index.html" class="logo">
+      <div class="logo-icon"><img src="logo2.png" alt="M"></div>
+      <span class="logo-text">Admin Panel</span>
+     </a>
+     <div class="flex gap-4">
+      <a href="panel.html" class="nav-link !text-[#00d4aa] font-bold self-center mr-4">Panel View</a>
+      <button id="logoutBtn" class="nav-cta">Logout</button>
+     </div>
+    </div>
+   </nav>
+
+   <section class="pt-32 px-6 pb-20 relative z-10 max-w-7xl mx-auto">
+    <h1 class="section-title">Admin Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+     <div class="admin-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="staffCount">0</div>
+      <div class="text-gray-400">Total Staff</div>
+     </div>
+     <div class="admin-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="panelCount">0</div>
+      <div class="text-gray-400">Panel Members</div>
+     </div>
+     <div class="admin-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="clientCount">0</div>
+      <div class="text-gray-400">Total Clients</div>
+     </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+     <!-- User Management -->
+     <div class="admin-card">
+      <h2 class="text-xl font-bold mb-6 flex justify-between items-center">
+       User Management
+       <button class="text-sm bg-[#00d4aa] text-[#0a1628] px-3 py-1 rounded-lg" onclick="openAddUserModal()">+ Add User</button>
+      </h2>
+      <div class="overflow-x-auto overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+       <table class="w-full text-left">
+        <thead class="sticky top-0 bg-[#0f2847] z-10">
+         <tr class="text-gray-400 border-b border-white/10">
+          <th class="pb-3">Name</th>
+          <th class="pb-3">Role</th>
+          <th class="pb-3">Action</th>
+         </tr>
+        </thead>
+        <tbody id="userTableBody">
+         <!-- Users will be loaded here -->
+        </tbody>
+       </table>
+      </div>
+     </div>
+
+     <!-- Vendor Management -->
+     <div class="admin-card">
+      <h2 class="text-xl font-bold mb-6 flex justify-between items-center">
+       <span> Vendor Assignment
+        <button onclick="openVendorHistory()" class="ml-2 text-gray-400 hover:text-[#00d4aa] transition-colors" title="View History">
+          <i class="fas fa-history text-lg"></i>
+        </button>
+       </span>
+       <i class="fas fa-truck-loading text-[#00d4aa]"></i>
+      </h2>
+      <form id="vendorForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="form-label">Vendor Name</label>
+            <input type="text" id="vendorName" class="form-input" placeholder="Vendor name" required>
+          </div>
+          <div>
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="vendorPhone" class="form-input" placeholder="Vendor phone" required>
+          </div>
+        </div>
+        <div>
+          <label class="form-label">Location</label>
+          <input type="text" id="vendorLocation" class="form-input" placeholder="Work location" required>
+        </div>
+        
+        <div id="vendorStaffContainer" class="space-y-2">
+          <label class="form-label">Assign Staff</label>
+          <div class="flex gap-2 mb-2">
+            <select class="vendor-staff-select form-input bg-[#0a1628]" required>
+              <option value="">Select Staff</option>
+              <!-- Staff list loaded here -->
+            </select>
+          </div>
+        </div>
+        
+        <button type="button" onclick="addMoreStaffRow()" class="text-xs text-[#00d4aa] hover:underline mb-4">
+          <i class="fas fa-plus mr-1"></i> Add More Staff
+        </button>
+
+        <div>
+          <label class="form-label">Message (Optional)</label>
+          <textarea id="vendorMessage" class="form-input" placeholder="Additional instructions..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn-primary w-full mt-4">Assign Vendor Work</button>
+      </form>
+      <div id="vendorMsg" class="mt-4 text-center text-sm hidden"></div>
+     </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="admin-card">
+      <h2 class="text-xl font-bold mb-6">Recent Activity</h2>
+      <div class="space-y-4 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar" id="activityLog">
+       <div class="text-gray-400 text-sm">Loading activity...</div>
+      </div>
+    </div>
+   </section>
+  </div>
+
+  <!-- Add User Modal (Simplified) -->
+  <div id="userModal" class="fixed inset-0 bg-black/80 z-[2000] hidden items-center justify-center p-6">
+    <div class="admin-card w-full max-w-md">
+      <h3 class="text-xl font-bold mb-4">Add New User</h3>
+      <form id="addUserForm" class="space-y-4">
+        <div>
+          <label class="form-label">Email</label>
+          <input type="email" id="newUserEmail" class="form-input" required>
+        </div>
+        <div>
+          <label class="form-label">Password</label>
+          <input type="password" id="newUserPassword" class="form-input" required>
+        </div>
+        <div>
+          <label class="form-label">Role</label>
+          <select id="newUserRole" class="form-input bg-[#0a1628]">
+            <option value="staff">Staff</option>
+            <option value="panel">Panel</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="flex gap-4 pt-4">
+          <button type="button" class="btn-secondary flex-1" onclick="closeAddUserModal()">Cancel</button>
+          <button type="submit" class="btn-primary flex-1">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Vendor History Modal -->
+  <div id="vendorHistoryModal" class="fixed inset-0 bg-black/80 z-[2000] hidden items-center justify-center p-6">
+    <div class="admin-card w-full max-w-4xl max-h-[80vh] flex flex-col">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold">Vendor Assignment History</h3>
+        <button onclick="closeVendorHistory()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      <div class="overflow-y-auto pr-2 custom-scrollbar flex-1" id="vendorHistoryContent">
+        <table class="w-full text-left">
+          <thead class="sticky top-0 bg-[#0f2847] z-10">
+            <tr class="text-gray-400 border-b border-white/10 text-sm">
+              <th class="pb-3">Vendor</th>
+              <th class="pb-3">Phone</th>
+              <th class="pb-3">Staff Email</th>
+              <th class="pb-3">Location</th>
+              <th class="pb-3">Status</th>
+              <th class="pb-3">Date</th>
+            </tr>
+          </thead>
+          <tbody id="vendorHistoryTableBody" class="text-sm">
+            <!-- Data will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+ </body>
+</html>

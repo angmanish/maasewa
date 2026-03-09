@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Dashboard - Maaseva Healthcare</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .panel-card { background: rgba(15, 40, 71, 0.6); border: 1px solid rgba(232, 244, 248, 0.1); border-radius: 20px; padding: 1.5rem; backdrop-filter: blur(10px); }
+  </style>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+   </div>
+   
+   <nav class="nav-container scrolled">
+    <div class="nav-inner">
+     <a href="index.html" class="logo">
+      <div class="logo-icon"><img src="logo2.png" alt="M"></div>
+      <span class="logo-text">Panel Supervisor</span>
+     </a>
+     <div class="flex gap-4">
+      <a href="admin.html" id="adminViewBtn" class="nav-link !text-[#00d4aa] font-bold self-center mr-4 hidden">Admin View</a>
+      <button id="logoutBtn" class="nav-cta">Logout</button>
+     </div>
+    </div>
+   </nav>
+
+   <section class="pt-32 px-6 pb-20 relative z-10 max-w-7xl mx-auto">
+    <h1 class="section-title">Panel Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+     <div class="panel-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="activeStaffCount">0</div>
+      <div class="text-gray-400">Active Staff</div>
+     </div>
+     <div class="panel-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="pendingWorkCount">0</div>
+      <div class="text-gray-400">Pending Assignments</div>
+     </div>
+     <div class="panel-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="completedWorkCount">0</div>
+      <div class="text-gray-400">Completed Today</div>
+     </div>
+     <div class="panel-card text-center">
+      <div class="text-3xl font-bold text-[#00d4aa]" id="activeClientsCount">0</div>
+      <div class="text-gray-400">Active Clients</div>
+     </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+     <!-- Assign Work -->
+     <div class="panel-card xl:col-span-1">
+      <h2 class="text-xl font-bold mb-6 flex justify-between items-center cursor-pointer" onclick="toggleSection('assignWorkSection', 'assignWorkChevron')">
+       Assign Work
+       <i id="assignWorkChevron" class="fas fa-chevron-up text-sm transition-transform duration-300"></i>
+      </h2>
+      <div id="assignWorkSection" class="section-content transition-all duration-300 overflow-hidden">
+        <form id="assignWorkForm" class="space-y-4">
+          <div>
+            <label class="form-label">Client Name</label>
+            <input type="text" id="workClient" class="form-input" placeholder="Enter client name" required>
+          </div>
+          <div>
+            <label class="form-label">Client Phone Number</label>
+            <input type="tel" id="workPhone" class="form-input" placeholder="Enter client phone number" required>
+          </div>
+          <div>
+            <label class="form-label">Staff Member</label>
+            <select id="workStaff" class="form-input bg-[#0a1628]" required>
+              <option value="">Select Staff</option>
+              <!-- Staff will be loaded here -->
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Location</label>
+            <input type="text" id="workLocation" class="form-input" placeholder="Enter work location" required>
+          </div>
+          <div>
+            <label class="form-label">Work Details</label>
+            <textarea id="workDetails" class="form-input" placeholder="Enter work instructions..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary w-full mt-4">Assign Work</button>
+        </form>
+        <div id="workMsg" class="mt-4 text-center text-sm hidden"></div>
+      </div>
+     </div>
+
+     <!-- Mark Attendance -->
+     <div class="panel-card xl:col-span-1">
+      <h2 class="text-xl font-bold mb-6 flex justify-between items-center cursor-pointer" onclick="toggleSection('attendanceSection', 'attendanceChevron')">
+       Mark Attendance
+       <i id="attendanceChevron" class="fas fa-chevron-up text-sm transition-transform duration-300"></i>
+      </h2>
+      <div id="attendanceSection" class="section-content transition-all duration-300 overflow-hidden">
+        <form id="panelAttendanceForm" class="space-y-4">
+          <div>
+            <label class="form-label">Select Staff Member</label>
+            <select id="attendanceStaff" class="form-input bg-[#0a1628]" required>
+              <option value="">Select Staff</option>
+              <!-- Staff will be loaded here -->
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Attendance Type</label>
+            <select id="attendanceType" class="form-input bg-[#0a1628]" required>
+              <option value="Present">Present</option>
+              <option value="Half-Day">Half-Day</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary w-full mt-4">Submit Attendance</button>
+        </form>
+        <div id="attendanceMsg" class="mt-4 text-center text-sm hidden"></div>
+      </div>
+     </div>
+
+     <!-- Recent Assignments -->
+     <div class="panel-card xl:col-span-1">
+      <h2 class="text-xl font-bold mb-6">Recent Assignments</h2>
+      <div class="overflow-x-auto">
+       <table class="w-full text-left">
+        <thead>
+         <tr class="text-gray-400 border-b border-white/10">
+          <th class="pb-3">Client</th>
+          <th class="pb-3">Staff</th>
+          <th class="pb-3">Status</th>
+          <th class="pb-3">Action</th>
+         </tr>
+        </thead>
+        <tbody id="assignmentsTableBody">
+         <!-- Assignments will be loaded here -->
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
+
+  <script>
+    function toggleSection(sectionId, chevronId) {
+      const section = document.getElementById(sectionId);
+      const chevron = document.getElementById(chevronId);
+      
+      // If it's the first time or set to 0, expand it
+      if (!section.style.maxHeight || section.style.maxHeight === '0px') {
+        section.style.maxHeight = section.scrollHeight + 'px';
+        chevron.style.transform = 'rotate(0deg)';
+      } else {
+        section.style.maxHeight = '0px';
+        chevron.style.transform = 'rotate(-180deg)';
+      }
+    }
+
+    // Initialize based on screen size
+    window.addEventListener('load', () => {
+      const isDesktop = window.innerWidth >= 1024;
+      ['assignWorkSection', 'attendanceSection'].forEach(id => {
+        const el = document.getElementById(id);
+        const chevronId = id === 'assignWorkSection' ? 'assignWorkChevron' : 'attendanceChevron';
+        const chevron = document.getElementById(chevronId);
+        if (el) {
+          if (isDesktop) {
+            el.style.maxHeight = el.scrollHeight + 'px';
+            if (chevron) chevron.style.transform = 'rotate(0deg)';
+          } else {
+            el.style.maxHeight = '0px';
+            if (chevron) chevron.style.transform = 'rotate(-180deg)';
+          }
+        }
+      });
+    });
+  </script>
+  <script type="module" src="dashboard.js"></script>
+ </body>
+</html>

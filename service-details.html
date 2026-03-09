@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Details - Maaseva Healthcare</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" type="image/png" href="logo2.png">
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+   </div>
+   <nav class="nav-container">
+    <div class="nav-inner"><a href="index.html" class="logo">
+      <div class="logo-icon">
+       <img src="logo2.png" alt="M">
+      </div><span class="logo-text">Maaseva Healthcare</span> </a>
+      <div class="flex items-center gap-4">
+       <a href="index.html#contact" class="nav-cta hidden sm:flex">Get Quote</a>
+       <button class="mobile-toggle sm:hidden" id="menuToggle" onclick="toggleMobileMenu()">
+        <div class="hamburger-bar b1"></div>
+        <div class="hamburger-bar b2"></div>
+        <div class="hamburger-bar b3"></div>
+       </button>
+      </div>
+    </div>
+   </nav>
+   <!-- Mobile Menu for consistency -->
+   <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" class="nav-link" onclick="toggleMobileMenu()">About</a> 
+    <a href="index.html#services" class="nav-link" onclick="toggleMobileMenu()">Services</a> 
+    <a href="index.html#contact" class="nav-link" onclick="toggleMobileMenu()">Contact</a> 
+    <a href="index.html#contact" class="nav-cta" onclick="toggleMobileMenu()">Get Quote</a>
+    <div class="mobile-socials">
+     <a href="#"><i class="fab fa-facebook-f"></i></a>
+     <a href="#"><i class="fab fa-instagram"></i></a>
+     <a href="https://wa.me/916361376521"><i class="fab fa-whatsapp"></i></a>
+    </div>
+   </div>
+   <section class="details-section">
+    <div class="details-container">
+     <a href="index.html#services" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Services </a>
+     <div id="service-content">
+      <div class="service-image-container mb-12" id="service-image-box" style="display: none;">
+        <img src="" id="service-image" alt="Service Image" class="w-full h-[400px] md:h-[500px] object-cover rounded-3xl border border-white/10 shadow-2xl">
+      </div>
+      <h1 class="service-title-large" id="service-title">Loading...</h1>
+      <p class="service-desc-large" id="service-description"></p>
+      <div id="service-details" class="details-grid">
+       <!-- Dynamic details will appear here -->
+      </div>
+      <div class="mt-12">
+        <a href="index.html#contact" class="btn-book">
+         <i class="fas fa-calendar-check mr-2"></i> Book This Service </a>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="footer">
+    <div class="footer-content">
+     <div class="text-sm text-gray-500">
+      © 2026 Maaseva Healthcare. All rights reserved.
+     </div>
+     <div class="flex gap-6 text-sm text-gray-500"><a href="#" class="hover:text-[#00d4aa]">Privacy Policy</a> <a href="#" class="hover:text-[#00d4aa]">Terms of Service</a> <a href="login.html" class="hover:text-[#00d4aa]">Login</a>
+     </div>
+    </div>
+   </footer>
+    <a href="https://wa.me/916361376521?text=Hi, I'm interested in your services." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+  <script src="details.js"></script>
+ </body>
+</html>
