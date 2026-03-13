@@ -41,7 +41,7 @@ async function redirectByRole(user) {
             if (role === 'admin') window.location.href = 'admin.html';
             else if (role === 'panel') window.location.href = 'panel.html';
             else if (role === 'staff') window.location.href = 'staff.html';
-            else window.location.href = 'index.html';
+            else window.location.href = 'login.html';
         }, 1500);
     } else {
         if (loginMessage) {

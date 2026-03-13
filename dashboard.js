@@ -45,12 +45,29 @@ onAuthStateChanged(auth, async (user) => {
     if (docSnap.exists()) {
         const userData = docSnap.data();
         const role = userData.role;
-        const currentPage = window.location.pathname.split('/').pop();
+        const currentPage = window.location.pathname.toLowerCase();
 
-        // Security check for roles
-        if (currentPage === 'admin.html' && role !== 'admin') window.location.href = 'index.html';
-        if (currentPage === 'panel.html' && role !== 'panel' && role !== 'admin') window.location.href = 'index.html';
-        if (currentPage === 'staff.html' && role !== 'staff' && role !== 'admin') window.location.href = 'index.html';
+        // Security check for roles - only redirect if on a protected page and NOT authorized
+        if (currentPage.includes('admin') && role !== 'admin') {
+            window.location.href = 'login.html';
+            return;
+        }
+        if (currentPage.includes('panel') && role !== 'panel' && role !== 'admin') {
+            window.location.href = 'login.html';
+            return;
+        }
+        if (currentPage.includes('staff') && role !== 'staff' && role !== 'admin') {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // If user is logged in and on login page, redirect them to their respective dashboard
+        if (currentPage.includes('login')) {
+            if (role === 'admin') window.location.href = 'admin.html';
+            else if (role === 'panel') window.location.href = 'panel.html';
+            else if (role === 'staff') window.location.href = 'staff.html';
+            return;
+        }
 
         // Load specific dashboard data
         if (role === 'admin') {
@@ -62,8 +79,8 @@ onAuthStateChanged(auth, async (user) => {
         if (role === 'staff') loadStaffDashboard(user.uid);
 
     } else {
-        if (!window.location.pathname.includes('index.html')) {
-            window.location.href = 'index.html';
+        if (!window.location.pathname.includes('login.html') && !window.location.pathname.includes('index.html')) {
+            window.location.href = 'login.html';
         }
     }
 });
