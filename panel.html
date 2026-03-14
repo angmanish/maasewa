@@ -9,174 +9,220 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
   <style>
-    .panel-card { background: rgba(15, 40, 71, 0.6); border: 1px solid rgba(232, 244, 248, 0.1); border-radius: 20px; padding: 1.5rem; backdrop-filter: blur(10px); }
+    .panel-card { background: rgba(15, 40, 71, 0.6); border: 1px solid rgba(232, 244, 248, 0.1); border-radius: 24px; padding: 1.5rem; backdrop-filter: blur(10px); }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 212, 170, 0.3);
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 212, 170, 0.5);
+    }
+
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
   </style>
  </head>
- <body class="h-full">
-  <div class="app-wrapper">
+ <body class="h-full bg-[#0a1628] text-white">
+  <div class="app-wrapper flex flex-col min-h-screen">
    <div class="gradient-bg">
     <div class="gradient-orb orb-1"></div>
     <div class="gradient-orb orb-2"></div>
    </div>
    
-   <nav class="nav-container scrolled">
+   <!-- Navigation -->
+   <nav class="nav-container scrolled sticky top-0 z-50">
     <div class="nav-inner">
      <a href="#" class="logo">
       <div class="logo-icon"><img src="logo2.png" alt="M"></div>
-      <span class="logo-text">Panel Supervisor</span>
+      <span class="logo-text">Supervisor <span class="text-[#00d4aa]">Node</span></span>
      </a>
-     <div class="flex gap-4">
-      <a href="admin.html" id="adminViewBtn" class="nav-link !text-[#00d4aa] font-bold self-center mr-4 hidden">Admin View</a>
-      <button id="logoutBtn" class="nav-cta">Logout</button>
+     <div class="flex items-center gap-4">
+      <a href="admin.html" id="adminViewBtn" class="hidden flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest hover:bg-[#00d4aa] hover:text-[#0a1628] transition-all">
+        <i class="fas fa-arrow-left"></i> Admin Dashboard
+      </a>
+      <button id="logoutBtn" class="nav-cta !py-2 !px-4 !text-xs">Logout</button>
      </div>
     </div>
    </nav>
 
-   <section class="pt-32 px-6 pb-20 relative z-10 max-w-7xl mx-auto">
-    <h1 class="section-title">Panel Dashboard</h1>
+   <!-- Main Content -->
+   <main class="flex-1 pt-24 px-6 pb-20 relative z-10 max-w-7xl mx-auto w-full">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <div>
+        <h1 class="text-3xl font-bold text-white mb-2">Panel Dashboard</h1>
+        <p class="text-gray-400 text-sm">Oversee operations, manage staff and assignments in real-time.</p>
+      </div>
+      <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
+        <div class="w-2 h-2 rounded-full bg-[#00d4aa] animate-pulse"></div>
+        <span class="text-xs font-bold uppercase tracking-wider text-gray-400" id="liveStatus">Node Active</span>
+      </div>
+    </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-     <div class="panel-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="activeStaffCount">0</div>
-      <div class="text-gray-400">Active Staff</div>
+    <!-- Visual Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+     <div class="panel-card group hover:border-[#00d4aa]/50 transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+          <i class="fas fa-user-nurse"></i>
+        </div>
+        <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Personnel</span>
+      </div>
+      <div class="text-3xl font-bold text-white mb-1" id="activeStaffCount">0</div>
+      <p class="text-xs text-gray-500">Active Field Staff</p>
+      <div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-blue-500 rounded-full" style="width: 70%"></div>
+      </div>
      </div>
-     <div class="panel-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="pendingWorkCount">0</div>
-      <div class="text-gray-400">Pending Assignments</div>
+
+     <div class="panel-card group hover:border-[#00d4aa]/50 transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div class="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+          <i class="fas fa-clock"></i>
+        </div>
+        <span class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Pending</span>
+      </div>
+      <div class="text-3xl font-bold text-white mb-1" id="pendingWorkCount">0</div>
+      <p class="text-xs text-gray-500">Awaiting Action</p>
+      <div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-yellow-500 rounded-full" style="width: 45%"></div>
+      </div>
      </div>
-     <div class="panel-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="completedWorkCount">0</div>
-      <div class="text-gray-400">Completed Today</div>
+
+     <div class="panel-card group hover:border-[#00d4aa]/50 transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <span class="text-[10px] font-bold text-green-400 uppercase tracking-widest">History</span>
+      </div>
+      <div class="text-3xl font-bold text-white mb-1" id="completedWorkCount">0</div>
+      <p class="text-xs text-gray-500">Completed Today</p>
+      <div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-green-500 rounded-full" style="width: 80%"></div>
+      </div>
      </div>
-     <div class="panel-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="activeClientsCount">0</div>
-      <div class="text-gray-400">Active Clients</div>
+
+     <div class="panel-card group hover:border-[#00d4aa]/50 transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa]">
+          <i class="fas fa-hospital-user"></i>
+        </div>
+        <span class="text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest">Reach</span>
+      </div>
+      <div class="text-3xl font-bold text-white mb-1" id="activeClientsCount">0</div>
+      <p class="text-xs text-gray-500">Active Case Load</p>
+      <div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-[#00d4aa] rounded-full" style="width: 60%"></div>
+      </div>
      </div>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-     <!-- Assign Work -->
-     <div class="panel-card xl:col-span-1">
-      <h2 class="text-xl font-bold mb-6 flex justify-between items-center cursor-pointer" onclick="toggleSection('assignWorkSection', 'assignWorkChevron')">
-       Assign Work
-       <i id="assignWorkChevron" class="fas fa-chevron-up text-sm transition-transform duration-300"></i>
-      </h2>
-      <div id="assignWorkSection" class="section-content transition-all duration-300 overflow-hidden">
-        <form id="assignWorkForm" class="space-y-4">
+     <!-- Assign Work Form -->
+     <div class="panel-card">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa]">
+          <i class="fas fa-plus-circle text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold">Assign Work</h2>
+      </div>
+      <form id="assignWorkForm" class="space-y-4">
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Client Name</label>
+          <input type="text" id="workClient" class="form-input" placeholder="Enter full name" required>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="form-label">Client Name</label>
-            <input type="text" id="workClient" class="form-input" placeholder="Enter client name" required>
+            <label class="form-label !text-[10px] uppercase mb-1">Contact</label>
+            <input type="tel" id="workPhone" class="form-input" placeholder="Phone number" required>
           </div>
           <div>
-            <label class="form-label">Client Phone Number</label>
-            <input type="tel" id="workPhone" class="form-input" placeholder="Enter client phone number" required>
-          </div>
-          <div>
-            <label class="form-label">Staff Member</label>
+            <label class="form-label !text-[10px] uppercase mb-1">Assigned To</label>
             <select id="workStaff" class="form-input bg-[#0a1628]" required>
               <option value="">Select Staff</option>
-              <!-- Staff will be loaded here -->
             </select>
           </div>
-          <div>
-            <label class="form-label">Location</label>
-            <input type="text" id="workLocation" class="form-input" placeholder="Enter work location" required>
-          </div>
-          <div>
-            <label class="form-label">Work Details</label>
-            <textarea id="workDetails" class="form-input" placeholder="Enter work instructions..."></textarea>
-          </div>
-          <button type="submit" class="btn-primary w-full mt-4">Assign Work</button>
-        </form>
-        <div id="workMsg" class="mt-4 text-center text-sm hidden"></div>
-      </div>
+        </div>
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Service Location</label>
+          <input type="text" id="workLocation" class="form-input" placeholder="Work address" required>
+        </div>
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Directives</label>
+          <textarea id="workDetails" class="form-input min-h-[80px]" placeholder="Specific instructions..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full mt-4 !rounded-xl py-3 font-bold uppercase tracking-wider text-sm shadow-lg shadow-[#00d4aa]/20 active:scale-[0.98]">Confirm Assignment</button>
+      </form>
+      <div id="workMsg" class="mt-4 text-center text-sm hidden"></div>
      </div>
 
-     <!-- Mark Attendance -->
-     <div class="panel-card xl:col-span-1">
-      <h2 class="text-xl font-bold mb-6 flex justify-between items-center cursor-pointer" onclick="toggleSection('attendanceSection', 'attendanceChevron')">
-       Mark Attendance
-       <i id="attendanceChevron" class="fas fa-chevron-up text-sm transition-transform duration-300"></i>
-      </h2>
-      <div id="attendanceSection" class="section-content transition-all duration-300 overflow-hidden">
-        <form id="panelAttendanceForm" class="space-y-4">
-          <div>
-            <label class="form-label">Select Staff Member</label>
-            <select id="attendanceStaff" class="form-input bg-[#0a1628]" required>
-              <option value="">Select Staff</option>
-              <!-- Staff will be loaded here -->
-            </select>
-          </div>
-          <div>
-            <label class="form-label">Attendance Type</label>
-            <select id="attendanceType" class="form-input bg-[#0a1628]" required>
-              <option value="Present">Present</option>
-              <option value="Half-Day">Half-Day</option>
-            </select>
-          </div>
-          <button type="submit" class="btn-primary w-full mt-4">Submit Attendance</button>
-        </form>
-        <div id="attendanceMsg" class="mt-4 text-center text-sm hidden"></div>
+     <!-- Attendance Form -->
+     <div class="panel-card">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+          <i class="fas fa-calendar-check text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold">Attendance</h2>
       </div>
+      <form id="panelAttendanceForm" class="space-y-4">
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Personnel</label>
+          <select id="attendanceStaff" class="form-input bg-[#0a1628]" required>
+            <option value="">Select Staff Member</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Log Date</label>
+          <input type="date" id="attendanceDate" class="form-input bg-[#0a1628]" required>
+        </div>
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">Status Type</label>
+          <select id="attendanceType" class="form-input bg-[#0a1628]" required>
+            <option value="Present">Present (Full Day)</option>
+            <option value="Half-Day">Half-Day Session</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary w-full mt-4 !rounded-xl py-3 font-bold uppercase tracking-wider text-sm shadow-lg shadow-purple-500/10 active:scale-[0.98] !bg-purple-600 !border-purple-500">Record Attendance</button>
+      </form>
+      <div id="attendanceMsg" class="mt-4 text-center text-sm hidden"></div>
      </div>
 
-     <!-- Recent Assignments -->
-     <div class="panel-card xl:col-span-1">
-      <h2 class="text-xl font-bold mb-6">Recent Assignments</h2>
-      <div class="overflow-x-auto">
-       <table class="w-full text-left">
-        <thead>
-         <tr class="text-gray-400 border-b border-white/10">
-          <th class="pb-3">Client</th>
-          <th class="pb-3">Staff</th>
-          <th class="pb-3">Status</th>
-          <th class="pb-3">Action</th>
-         </tr>
-        </thead>
-        <tbody id="assignmentsTableBody">
-         <!-- Assignments will be loaded here -->
-        </tbody>
-       </table>
+     <!-- Recent Assignments List -->
+     <div class="panel-card flex flex-col">
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+            <i class="fas fa-tasks text-xl"></i>
+          </div>
+          <h2 class="text-xl font-bold">Activity</h2>
+        </div>
+        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Recent</span>
+      </div>
+      <div class="overflow-y-auto flex-1 pr-2 custom-scrollbar max-h-[450px]">
+        <div id="assignmentsTableBody" class="space-y-3">
+          <!-- Assignments loaded as cards here -->
+          <div class="text-gray-500 text-sm text-center py-10">Loading assignments...</div>
+        </div>
       </div>
      </div>
     </div>
-   </section>
+   </main>
   </div>
 
-  <script>
-    function toggleSection(sectionId, chevronId) {
-      const section = document.getElementById(sectionId);
-      const chevron = document.getElementById(chevronId);
-      
-      // If it's the first time or set to 0, expand it
-      if (!section.style.maxHeight || section.style.maxHeight === '0px') {
-        section.style.maxHeight = section.scrollHeight + 'px';
-        chevron.style.transform = 'rotate(0deg)';
-      } else {
-        section.style.maxHeight = '0px';
-        chevron.style.transform = 'rotate(-180deg)';
-      }
-    }
-
-    // Initialize based on screen size
-    window.addEventListener('load', () => {
-      const isDesktop = window.innerWidth >= 1024;
-      ['assignWorkSection', 'attendanceSection'].forEach(id => {
-        const el = document.getElementById(id);
-        const chevronId = id === 'assignWorkSection' ? 'assignWorkChevron' : 'attendanceChevron';
-        const chevron = document.getElementById(chevronId);
-        if (el) {
-          if (isDesktop) {
-            el.style.maxHeight = el.scrollHeight + 'px';
-            if (chevron) chevron.style.transform = 'rotate(0deg)';
-          } else {
-            el.style.maxHeight = '0px';
-            if (chevron) chevron.style.transform = 'rotate(-180deg)';
-          }
-        }
-      });
-    });
-  </script>
   <script type="module" src="dashboard.js"></script>
  </body>
 </html>

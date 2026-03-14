@@ -25,186 +25,662 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(0, 212, 170, 0.5);
     }
+
+    .sidebar {
+      width: 260px;
+      background: rgba(10, 22, 40, 0.98);
+      border-right: 1px solid rgba(232, 244, 248, 0.1);
+      backdrop-filter: blur(20px);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        position: sticky;
+        transform: translateX(0);
+      }
+      .sidebar-overlay {
+        display: none !important;
+      }
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 90;
+      display: none;
+    }
+
+    .sidebar-overlay.show {
+      display: block;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      color: #94a3b8;
+      border-radius: 12px;
+      transition: all 0.2s;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(0, 212, 170, 0.1);
+      color: #00d4aa;
+    }
+
+    .sidebar-link i {
+      width: 24px;
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      height: 100vh;
+      width: 100%;
+    }
+
+    /* Table Responsiveness */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-container table {
+      min-width: 600px;
+    }
+
+    #history-view .table-container table {
+      min-width: 1100px;
+    }
   </style>
  </head>
- <body class="h-full">
-  <div class="app-wrapper">
+ <body class="h-full bg-[#0a1628] text-white">
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="app-wrapper flex overflow-hidden">
    <div class="gradient-bg">
     <div class="gradient-orb orb-1"></div>
     <div class="gradient-orb orb-2"></div>
    </div>
-   
-   <nav class="nav-container scrolled">
-    <div class="nav-inner">
-     <a href="#" class="logo">
-      <div class="logo-icon"><img src="logo2.png" alt="M"></div>
-      <span class="logo-text">Admin Panel</span>
-     </a>
-     <div class="flex gap-4">
-      <a href="panel.html" class="nav-link !text-[#00d4aa] font-bold self-center mr-4">Panel View</a>
-      <button id="logoutBtn" class="nav-cta">Logout</button>
-     </div>
-    </div>
-   </nav>
 
-   <section class="pt-32 px-6 pb-20 relative z-10 max-w-7xl mx-auto">
-    <h1 class="section-title">Admin Dashboard</h1>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-     <div class="admin-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="staffCount">0</div>
-      <div class="text-gray-400">Total Staff</div>
-     </div>
-     <div class="admin-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="panelCount">0</div>
-      <div class="text-gray-400">Panel Members</div>
-     </div>
-     <div class="admin-card text-center">
-      <div class="text-3xl font-bold text-[#00d4aa]" id="clientCount">0</div>
-      <div class="text-gray-400">Total Clients</div>
-     </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-     <!-- User Management -->
-     <div class="admin-card">
-      <h2 class="text-xl font-bold mb-6 flex justify-between items-center">
-       User Management
-       <button class="text-sm bg-[#00d4aa] text-[#0a1628] px-3 py-1 rounded-lg" onclick="openAddUserModal()">+ Add User</button>
-      </h2>
-      <div class="overflow-x-auto overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
-       <table class="w-full text-left">
-        <thead class="sticky top-0 bg-[#0f2847] z-10">
-         <tr class="text-gray-400 border-b border-white/10">
-          <th class="pb-3">Name</th>
-          <th class="pb-3">Role</th>
-          <th class="pb-3">Action</th>
-         </tr>
-        </thead>
-        <tbody id="userTableBody">
-         <!-- Users will be loaded here -->
-        </tbody>
-       </table>
-      </div>
-     </div>
-
-     <!-- Vendor Management -->
-     <div class="admin-card">
-      <h2 class="text-xl font-bold mb-6 flex justify-between items-center">
-       <span> Vendor Assignment
-        <button onclick="openVendorHistory()" class="ml-2 text-gray-400 hover:text-[#00d4aa] transition-colors" title="View History">
-          <i class="fas fa-history text-lg"></i>
-        </button>
-       </span>
-       <i class="fas fa-truck-loading text-[#00d4aa]"></i>
-      </h2>
-      <form id="vendorForm" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="form-label">Vendor Name</label>
-            <input type="text" id="vendorName" class="form-input" placeholder="Vendor name" required>
-          </div>
-          <div>
-            <label class="form-label">Phone Number</label>
-            <input type="tel" id="vendorPhone" class="form-input" placeholder="Vendor phone" required>
-          </div>
+   <!-- Sidebar -->
+   <aside id="sidebar" class="sidebar flex flex-col h-screen z-[100]">
+    <div class="p-6">
+     <div class="flex items-center justify-between mb-10">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#00d4aa]/20 flex items-center justify-center border border-[#00d4aa]/30">
+          <img src="logo2.png" alt="M" class="w-6 h-6 object-contain">
         </div>
-        <div>
-          <label class="form-label">Location</label>
-          <input type="text" id="vendorLocation" class="form-input" placeholder="Work location" required>
+        <span class="text-xl font-bold tracking-tight text-white">Maaseva <span class="text-[#00d4aa]">Admin</span></span>
+      </a>
+      <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+     </div>
+
+     <nav class="flex-1">
+      <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 ml-2">Menu</p>
+      <a onclick="showView('dashboard')" id="nav-dashboard" class="sidebar-link active">
+        <i class="fas fa-th-large"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="panel.html" class="sidebar-link">
+        <i class="fas fa-users-cog"></i>
+        <span>Panel View</span>
+      </a>
+      
+      <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mt-8 mb-4 ml-2">Management</p>
+      <a onclick="showView('user')" id="nav-user" class="sidebar-link">
+        <i class="fas fa-users"></i>
+        <span>User Control</span>
+      </a>
+      <a onclick="showView('vendor')" id="nav-vendor" class="sidebar-link">
+        <i class="fas fa-truck-loading"></i>
+        <span>Vendor Panel</span>
+      </a>
+      <a onclick="showView('salary')" id="nav-salary" class="sidebar-link">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span>Salary & Payroll</span>
+      </a>
+      <a onclick="showView('history')" id="nav-history" class="sidebar-link">
+        <i class="fas fa-history"></i>
+        <span>Vendor History</span>
+      </a>
+     </nav>
+    </div>
+
+    <div class="mt-auto p-6 border-t border-white/5">
+      <button id="logoutBtn" class="flex items-center gap-3 text-red-400 hover:text-red-300 transition-colors w-full px-4 py-3 rounded-xl hover:bg-red-400/5">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="font-medium">Sign Out</span>
+      </button>
+    </div>
+   </aside>
+
+   <!-- Main Content -->
+   <main class="main-content relative z-10 custom-scrollbar">
+    <!-- Mobile Header -->
+    <header class="sticky top-0 z-40 bg-[#0a1628]/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center lg:hidden">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-[#00d4aa]/20 flex items-center justify-center border border-[#00d4aa]/30">
+          <img src="logo2.png" alt="M" class="w-5 h-5 object-contain">
+        </div>
+        <span class="font-bold text-lg">Maaseva Admin</span>
+      </div>
+      <button onclick="toggleSidebar()" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-[#00d4aa]">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </header>
+
+    <div class="p-6 lg:p-10 max-w-[1600px] mx-auto">
+      
+      <!-- Dashboard View -->
+      <div id="dashboard-view" class="view-section">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+          <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-white mb-2">System Overview</h1>
+            <p class="text-gray-400 text-sm lg:text-base">Real-time visualization of your healthcare network.</p>
+          </div>
+          <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
+            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400">System Live</span>
+          </div>
         </div>
         
-        <div id="vendorStaffContainer" class="space-y-2">
-          <label class="form-label">Assign Staff</label>
-          <div class="flex gap-2 mb-2">
-            <select class="vendor-staff-select form-input bg-[#0a1628]" required>
-              <option value="">Select Staff</option>
-              <!-- Staff list loaded here -->
+        <!-- Enhanced Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div class="admin-card overflow-hidden relative group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <i class="fas fa-user-nurse text-6xl rotate-12"></i>
+            </div>
+            <div class="relative z-10">
+              <p class="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] mb-4">Workforce</p>
+              <div class="flex items-end gap-4 mb-6">
+                <h2 class="text-5xl font-bold text-white" id="staffCount">0</h2>
+                <span class="text-xs text-green-400 font-bold mb-2"><i class="fas fa-caret-up"></i> Active</span>
+              </div>
+              <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div id="staffProgress" class="h-full bg-blue-500 rounded-full transition-all duration-1000" style="width: 0%"></div>
+              </div>
+              <p class="text-[10px] text-gray-500 mt-2 font-medium" id="staffUtilization">Calculating Capacity...</p>
+            </div>
+          </div>
+
+          <div class="admin-card overflow-hidden relative group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <i class="fas fa-user-shield text-6xl rotate-12"></i>
+            </div>
+            <div class="relative z-10">
+              <p class="text-[10px] font-bold text-purple-400 uppercase tracking-[0.2em] mb-4">Supervision</p>
+              <div class="flex items-end gap-4 mb-6">
+                <h2 class="text-5xl font-bold text-white" id="panelCount">0</h2>
+                <span class="text-xs text-purple-400 font-bold mb-2">Verified</span>
+              </div>
+              <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div id="panelProgress" class="h-full bg-purple-500 rounded-full transition-all duration-1000" style="width: 0%"></div>
+              </div>
+              <p class="text-[10px] text-gray-500 mt-2 font-medium" id="panelCoverage">Node Coverage Active</p>
+            </div>
+          </div>
+
+          <div class="admin-card overflow-hidden relative group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <i class="fas fa-users text-6xl rotate-12"></i>
+            </div>
+            <div class="relative z-10">
+              <p class="text-[10px] font-bold text-[#00d4aa] uppercase tracking-[0.2em] mb-4">Client Base</p>
+              <div class="flex items-end gap-4 mb-6">
+                <h2 class="text-5xl font-bold text-white" id="clientCount">0</h2>
+                <span class="text-xs text-[#00d4aa] font-bold mb-2">Retention</span>
+              </div>
+              <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div id="clientProgress" class="h-full bg-[#00d4aa] rounded-full transition-all duration-1000" style="width: 0%"></div>
+              </div>
+              <p class="text-[10px] text-gray-500 mt-2 font-medium">Global Satisfaction Index</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <!-- Dispatch Insights (Visual Chart Placeholder) -->
+          <div class="admin-card flex flex-col">
+            <div class="flex justify-between items-center mb-8">
+              <h2 class="text-lg font-bold flex items-center gap-3">
+                <i class="fas fa-chart-pie text-orange-400"></i>
+                Dispatch Performance
+              </h2>
+              <div class="flex gap-2">
+                <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-green-500"></div><span class="text-[10px] text-gray-400">Done</span></div>
+                <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-yellow-500"></div><span class="text-[10px] text-gray-400">Wait</span></div>
+              </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-around">
+              <div class="space-y-6">
+                <div>
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-gray-400">Nursing Care Assignments</span>
+                    <span class="text-white font-bold" id="nursingPerc">0%</span>
+                  </div>
+                  <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div id="nursingProgress" class="h-full bg-green-500 transition-all duration-1000" style="width: 0%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-gray-400">Physiotherapy Sessions</span>
+                    <span class="text-white font-bold" id="physioPerc">0%</span>
+                  </div>
+                  <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div id="physioProgress" class="h-full bg-blue-500 transition-all duration-1000" style="width: 0%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-gray-400">Vendor Deliveries</span>
+                    <span class="text-white font-bold" id="vendorPerc">0%</span>
+                  </div>
+                  <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div id="vendorProgress" class="h-full bg-yellow-500 transition-all duration-1000" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8 grid grid-cols-3 gap-4 border-t border-white/5 pt-8">
+                <div class="text-center border-r border-white/5">
+                  <p class="text-[10px] text-gray-500 uppercase font-bold mb-1">Response</p>
+                  <p class="text-lg font-bold text-white" id="responseRate">--</p>
+                </div>
+                <div class="text-center border-r border-white/5">
+                  <p class="text-[10px] text-gray-500 uppercase font-bold mb-1">Efficiency</p>
+                  <p class="text-lg font-bold text-white" id="efficiencyRate">0%</p>
+                </div>
+                <div class="text-center">
+                  <p class="text-[10px] text-gray-500 uppercase font-bold mb-1">Uptime</p>
+                  <p class="text-lg font-bold text-white">99.9</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Activity Log -->
+          <div class="admin-card">
+            <div class="flex justify-between items-center mb-8">
+              <h2 class="text-lg font-bold flex items-center gap-3">
+                <i class="fas fa-history text-blue-400"></i>
+                System Pulse
+              </h2>
+              <button class="text-[10px] text-[#00d4aa] font-bold uppercase tracking-wider hover:underline">View All</button>
+            </div>
+            <div class="space-y-6 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar relative" id="activityLog">
+              <div class="absolute left-4 top-0 bottom-0 w-px bg-white/5"></div>
+              <div class="text-gray-400 text-sm pl-8">Syncing heartbeat...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Control View -->
+      <div id="user-view" class="view-section hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa] border border-[#00d4aa]/20">
+              <i class="fas fa-users-cog text-2xl lg:text-3xl"></i>
+            </div>
+            <div>
+              <h1 class="text-2xl lg:text-3xl font-bold text-white">User Control</h1>
+              <p class="text-gray-400 text-xs lg:text-sm">Manage user identities and access privileges.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
+         <div class="flex flex-col gap-6 lg:gap-8">
+           <!-- Add User Section -->
+           <div id="add-user-section" class="admin-card h-fit">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 rounded-xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa]">
+                <i class="fas fa-user-plus text-xl"></i>
+              </div>
+              <h2 class="text-lg font-bold">New Account</h2>
+            </div>
+                      <form id="addUserForm" class="space-y-4">
+                        <div>
+                          <label class="form-label !text-[10px] uppercase mb-1">Full Legal Name</label>
+                          <input type="text" id="newUserName" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                          <label class="form-label !text-[10px] uppercase mb-1">Email Identity</label>
+                          <input type="email" id="newUserEmail" class="form-input" placeholder="email@example.com" required>
+                        </div>              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Access Password</label>
+                <input type="password" id="newUserPassword" class="form-input" placeholder="••••••••" required>
+              </div>
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Authorization Role</label>
+                <select id="newUserRole" class="form-input bg-[#0a1628]">
+                  <option value="staff">Standard Staff</option>
+                  <option value="panel">Panel Supervisor</option>
+                  <option value="admin">System Admin</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary w-full mt-4 !rounded-xl py-3 font-bold uppercase tracking-wider text-xs shadow-lg shadow-[#00d4aa]/20 active:scale-[0.98]">Initialize Account</button>
+            </form>
+           </div>
+
+           <!-- Update Password Section -->
+           <div id="update-password-section" class="admin-card h-fit border-yellow-500/10">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+                <i class="fas fa-key text-xl"></i>
+              </div>
+              <h2 class="text-lg font-bold">Update Key</h2>
+            </div>
+            <form id="changePasswordForm" class="space-y-4">
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Select User</label>
+                <select id="passwordTargetUid" class="form-input bg-[#0a1628]" required>
+                  <option value="">Select User from Directory</option>
+                  <!-- Users loaded here -->
+                </select>
+              </div>
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">New Access Password</label>
+                <input type="password" id="newPassword" class="form-input" placeholder="Enter new password" required minlength="6">
+              </div>
+              <button type="submit" class="btn-primary w-full mt-4 !rounded-xl py-3 font-bold uppercase tracking-wider text-xs shadow-lg shadow-yellow-500/10 active:scale-[0.98]">Update Security Key</button>
+            </form>
+            <div id="passwordMsg" class="mt-4 text-center text-xs hidden"></div>
+           </div>
+         </div>
+
+         <!-- User List -->
+         <div id="user-section" class="admin-card flex flex-col lg:col-span-2">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg lg:text-xl font-bold flex items-center gap-3">
+              <i class="fas fa-address-book text-[#00d4aa]"></i>
+              Personnel Directory
+            </h2>
+            <span class="text-[10px] bg-white/5 px-2 py-1 rounded-full text-gray-500 border border-white/5">Real-time Sync</span>
+          </div>
+          <div class="table-container custom-scrollbar">
+           <table class="w-full text-left">
+            <thead class="sticky top-0 bg-[#0f2847] z-10">
+             <tr class="text-gray-500 border-b border-white/5 text-[10px] lg:text-[11px] uppercase tracking-widest font-bold">
+              <th class="pb-3 px-2">User Identity</th>
+              <th class="pb-3 px-2">Privilege</th>
+              <th class="pb-3 px-2 text-right">Actions</th>
+             </tr>
+            </thead>
+            <tbody id="userTableBody">
+             <!-- Users loaded here -->
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div>
+      </div>
+
+      <!-- Vendor Panel View -->
+      <div id="vendor-view" class="view-section hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa] border border-[#00d4aa]/20">
+              <i class="fas fa-truck-loading text-2xl lg:text-3xl"></i>
+            </div>
+            <div>
+              <h1 class="text-2xl lg:text-3xl font-bold text-white">Vendor Panel</h1>
+              <p class="text-gray-400 text-xs lg:text-sm">Dispatch personnel to vendors and manage assignments.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="vendor-section" class="admin-card max-w-3xl">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg lg:text-xl font-bold flex items-center gap-3">
+              <i class="fas fa-paper-plane text-[#00d4aa]"></i>
+              Vendor Dispatch
+            </h2>
+          </div>
+          <form id="vendorForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Vendor Entity</label>
+                <input type="text" id="vendorName" class="form-input" placeholder="Vendor name" required>
+              </div>
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Contact Link</label>
+                <input type="tel" id="vendorPhone" class="form-input" placeholder="Vendor phone" required>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Schedule Start</label>
+                <input type="date" id="vendorStartDate" class="form-input" required>
+              </div>
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Schedule End</label>
+                <input type="date" id="vendorEndDate" class="form-input" required>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Target Location</label>
+                <input type="text" id="vendorLocation" class="form-input" placeholder="Work location" required>
+              </div>
+              <div>
+                <label class="form-label !text-[10px] uppercase mb-1">Contract Value</label>
+                <input type="number" id="vendorPrice" class="form-input" placeholder="Enter amount" required>
+              </div>
+            </div>
+            
+            <div id="vendorStaffContainer" class="space-y-2">
+              <label class="form-label !text-[10px] uppercase mb-1">Assigned Personnel</label>
+              <div class="flex gap-2 mb-2">
+                <select class="vendor-staff-select form-input bg-[#0a1628]" required>
+                  <option value="">Select Staff Member</option>
+                </select>
+              </div>
+            </div>
+            
+            <button type="button" onclick="addMoreStaffRow()" class="text-[10px] text-[#00d4aa] hover:underline flex items-center gap-2 font-bold uppercase tracking-wider">
+              <i class="fas fa-plus-circle text-xs"></i> Add More Staff
+            </button>
+
+            <div>
+              <label class="form-label !text-[10px] uppercase mb-1">Special Directives</label>
+              <textarea id="vendorMessage" class="form-input min-h-[100px]" placeholder="Additional instructions..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn-primary w-full mt-4 !rounded-xl py-3.5 text-base font-bold uppercase tracking-wider shadow-lg shadow-[#00d4aa]/20 active:scale-[0.98]">Confirm & Dispatch</button>
+          </form>
+          <div id="vendorMsg" class="mt-4 text-center text-sm hidden"></div>
+        </div>
+      </div>
+
+      <!-- Salary & Payroll View -->
+      <div id="salary-view" class="view-section hidden">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa] border border-[#00d4aa]/20">
+              <i class="fas fa-file-invoice-dollar text-2xl lg:text-3xl"></i>
+            </div>
+            <div>
+              <h1 class="text-2xl lg:text-3xl font-bold text-white">Payroll Management</h1>
+              <p class="text-gray-400 text-xs lg:text-sm">Manage staff salaries, overtime, and incentives.</p>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
+             <div class="relative flex-1 sm:w-64">
+               <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+               <input type="text" id="salarySearch" placeholder="Search staff email..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-[#00d4aa] outline-none transition-all">
+             </div>
+             <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-2">
+               <span class="text-xs text-gray-400">Month:</span>
+               <span class="text-sm font-bold text-[#00d4aa]" id="payrollMonth">March 2026</span>
+             </div>
+          </div>
+        </div>
+
+        <div class="admin-card p-0 overflow-hidden">
+          <div class="table-container custom-scrollbar">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="text-gray-500 bg-white/5 border-b border-white/10 text-[10px] uppercase tracking-widest font-bold">
+                  <th class="px-6 py-5">Staff Personnel</th>
+                  <th class="px-6 py-5 text-center">Attendance (Days)</th>
+                  <th class="px-6 py-5">Salary Period</th>
+                  <th class="px-6 py-5">Daily Rate</th>
+                  <th class="px-6 py-5">Overtime (₹)</th>
+                  <th class="px-6 py-5">Incentive</th>
+                  <th class="px-6 py-5">Total Payable</th>
+                  <th class="px-6 py-5 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="salaryTableBody" class="text-sm">
+                <!-- Data loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vendor History View -->
+      <div id="history-view" class="view-section hidden">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[#00d4aa]/10 flex items-center justify-center text-[#00d4aa] border border-[#00d4aa]/20">
+              <i class="fas fa-history text-2xl lg:text-3xl"></i>
+            </div>
+            <div>
+              <h1 class="text-2xl lg:text-3xl font-bold text-white">Dispatch Archive</h1>
+              <p class="text-gray-400 text-xs lg:text-sm">Review and manage past vendor assignments.</p>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
+            <div class="relative flex-1 sm:w-72">
+              <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              <input type="text" id="vendorSearch" placeholder="Search vendor or staff..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm focus:border-[#00d4aa] outline-none transition-all">
+            </div>
+            <select id="vendorStatusFilter" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#00d4aa] cursor-pointer font-medium">
+              <option value="all" class="bg-[#0a1628]">All Status</option>
+              <option value="pending" class="bg-[#0a1628]">Pending</option>
+              <option value="completed" class="bg-[#0a1628]">Completed</option>
             </select>
           </div>
         </div>
-        
-        <button type="button" onclick="addMoreStaffRow()" class="text-xs text-[#00d4aa] hover:underline mb-4">
-          <i class="fas fa-plus mr-1"></i> Add More Staff
-        </button>
 
-        <div>
-          <label class="form-label">Message (Optional)</label>
-          <textarea id="vendorMessage" class="form-input" placeholder="Additional instructions..."></textarea>
+        <div class="admin-card min-h-[60vh] p-0 overflow-hidden">
+          <div class="table-container custom-scrollbar">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="text-gray-500 bg-white/5 border-b border-white/10 text-[10px] uppercase tracking-widest font-bold">
+                  <th class="px-6 py-5">Vendor Entity</th>
+                  <th class="px-6 py-5">Contact</th>
+                  <th class="px-6 py-5">Personnel</th>
+                  <th class="px-6 py-5">Target Location</th>
+                  <th class="px-6 py-5">Value</th>
+                  <th class="px-6 py-5">Period</th>
+                  <th class="px-6 py-5">Status</th>
+                  <th class="px-6 py-5">Logged</th>
+                  <th class="px-6 py-5 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="vendorHistoryTableBody" class="text-sm">
+                <!-- Data loaded here -->
+              </tbody>
+            </table>
+          </div>
         </div>
-        
-        <button type="submit" class="btn-primary w-full mt-4">Assign Vendor Work</button>
+      </div>
+
+    </div>
+   </main>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="passwordModal" class="fixed inset-0 bg-black/90 z-[2000] hidden items-center justify-center p-4 backdrop-blur-md">
+    <div class="admin-card w-full max-w-md border-[#00d4aa]/20 shadow-2xl relative">
+      <button onclick="closePasswordModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+          <i class="fas fa-key text-xl"></i>
+        </div>
+        <h3 class="text-xl lg:text-2xl font-bold">Update Password</h3>
+      </div>
+      <p id="passwordTargetEmail" class="text-xs text-gray-400 mb-6 truncate"></p>
+      <form id="changePasswordForm" class="space-y-4">
+        <input type="hidden" id="passwordTargetUid">
+        <div>
+          <label class="form-label !text-[10px] uppercase mb-1">New Access Password</label>
+          <input type="password" id="newPassword" class="form-input" placeholder="Enter new password" required minlength="6">
+        </div>
+        <div class="flex gap-4 pt-6">
+          <button type="button" class="btn-secondary flex-1 !rounded-xl py-3 font-bold uppercase tracking-wider text-xs" onclick="closePasswordModal()">Cancel</button>
+          <button type="submit" class="btn-primary flex-1 !rounded-xl py-3 font-bold uppercase tracking-wider text-xs">Update Key</button>
+        </div>
       </form>
-      <div id="vendorMsg" class="mt-4 text-center text-sm hidden"></div>
-     </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="admin-card">
-      <h2 class="text-xl font-bold mb-6">Recent Activity</h2>
-      <div class="space-y-4 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar" id="activityLog">
-       <div class="text-gray-400 text-sm">Loading activity...</div>
-      </div>
-    </div>
-   </section>
-  </div>
-
-  <!-- Add User Modal (Simplified) -->
-  <div id="userModal" class="fixed inset-0 bg-black/80 z-[2000] hidden items-center justify-center p-6">
-    <div class="admin-card w-full max-w-md">
-      <h3 class="text-xl font-bold mb-4">Add New User</h3>
-      <form id="addUserForm" class="space-y-4">
-        <div>
-          <label class="form-label">Email</label>
-          <input type="email" id="newUserEmail" class="form-input" required>
-        </div>
-        <div>
-          <label class="form-label">Password</label>
-          <input type="password" id="newUserPassword" class="form-input" required>
-        </div>
-        <div>
-          <label class="form-label">Role</label>
-          <select id="newUserRole" class="form-input bg-[#0a1628]">
-            <option value="staff">Staff</option>
-            <option value="panel">Panel</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-        <div class="flex gap-4 pt-4">
-          <button type="button" class="btn-secondary flex-1" onclick="closeAddUserModal()">Cancel</button>
-          <button type="submit" class="btn-primary flex-1">Create User</button>
-        </div>
-      </form>
     </div>
   </div>
 
-  <!-- Vendor History Modal -->
-  <div id="vendorHistoryModal" class="fixed inset-0 bg-black/80 z-[2000] hidden items-center justify-center p-6">
-    <div class="admin-card w-full max-w-4xl max-h-[80vh] flex flex-col">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-bold">Vendor Assignment History</h3>
-        <button onclick="closeVendorHistory()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-      </div>
-      <div class="overflow-y-auto pr-2 custom-scrollbar flex-1" id="vendorHistoryContent">
-        <table class="w-full text-left">
-          <thead class="sticky top-0 bg-[#0f2847] z-10">
-            <tr class="text-gray-400 border-b border-white/10 text-sm">
-              <th class="pb-3">Vendor</th>
-              <th class="pb-3">Phone</th>
-              <th class="pb-3">Staff Email</th>
-              <th class="pb-3">Location</th>
-              <th class="pb-3">Status</th>
-              <th class="pb-3">Date</th>
-            </tr>
-          </thead>
-          <tbody id="vendorHistoryTableBody" class="text-sm">
-            <!-- Data will be loaded here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
 
+    function showView(viewId, scrollToId = null) {
+      document.querySelectorAll('.view-section').forEach(view => view.classList.add('hidden'));
+      document.getElementById(viewId + '-view').classList.remove('hidden');
+      document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+      
+      const navItem = document.getElementById('nav-' + viewId);
+      if (navItem) navItem.classList.add('active');
+
+      if (scrollToId) {
+        setTimeout(() => {
+          const el = document.getElementById(scrollToId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+
+      if (viewId === 'history' && window.initVendorHistory) {
+        window.initVendorHistory();
+      }
+      if (viewId === 'salary' && window.initSalaryManagement) {
+        window.initSalaryManagement();
+      }
+
+      // Close mobile sidebar if open
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+    }
+  </script>
   <script type="module" src="dashboard.js"></script>
  </body>
 </html>
