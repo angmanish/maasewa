@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Details - Maaseva Healthcare</title>
+  <title>Service Details - Maasewa Healthcare</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -20,12 +20,27 @@
     <div class="nav-inner"><a href="index.html" class="logo">
       <div class="logo-icon">
        <img src="logo2.png" alt="M">
-      </div><span class="logo-text">Maaseva Healthcare</span> </a>
+      </div><span class="logo-text">Maasewa Healthcare</span> </a>
+      <div class="nav-links">
+        <a href="index.html#about" class="nav-link">About</a> 
+        <div class="nav-item-dropdown">
+          <a href="index.html#services" class="nav-link">Services <i class="fas fa-chevron-down ml-1 text-[10px]"></i></a>
+          <div class="dropdown-menu">
+            <a href="service-details.html?service=nursing-staff" class="dropdown-link"><i class="fas fa-user-nurse"></i> Nursing Staff</a>
+            <a href="service-details.html?service=elder-care" class="dropdown-link"><i class="fas fa-blind"></i> Elder Care</a>
+            <a href="service-details.html?service=icu-setup" class="dropdown-link"><i class="fas fa-procedures"></i> ICU Home Setup</a>
+            <a href="service-details.html?service=post-op-care" class="dropdown-link"><i class="fas fa-heartbeat"></i> Post-Operative Care</a>
+            <a href="service-details.html?service=specialized-care" class="dropdown-link"><i class="fas fa-wheelchair"></i> Specialized Care</a>
+            <a href="service-details.html?service=injection-visit" class="dropdown-link"><i class="fas fa-syringe"></i> Injection Visit</a>
+          </div>
+        </div>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
       <div class="flex items-center gap-4">
        <a href="login.html" class="nav-login-icon" title="Login">
         <i class="fas fa-user"></i>
        </a>
-       <a href="index.html#contact" class="nav-cta hidden sm:flex">Get Quote</a>
+       <a href="contact.html" class="nav-cta hidden sm:flex">Get Quote</a>
        <button class="mobile-toggle sm:hidden" id="menuToggle" onclick="toggleMobileMenu()">
         <div class="hamburger-bar b1"></div>
         <div class="hamburger-bar b2"></div>
@@ -37,10 +52,20 @@
    <!-- Mobile Menu for consistency -->
    <div class="mobile-menu" id="mobileMenu">
     <a href="index.html#about" class="nav-link" onclick="toggleMobileMenu()">About</a> 
-    <a href="index.html#services" class="nav-link" onclick="toggleMobileMenu()">Services</a> 
-    <a href="index.html#contact" class="nav-link" onclick="toggleMobileMenu()">Contact</a> 
+    <div class="w-full text-center">
+      <a href="index.html#services" class="nav-link" onclick="toggleMobileMenu()">Services</a>
+      <div class="flex flex-col gap-2 mt-2 mb-4 bg-white/5 py-4 rounded-2xl">
+        <a href="service-details.html?service=nursing-staff" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Nursing Staff</a>
+        <a href="service-details.html?service=elder-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Elder Care</a>
+        <a href="service-details.html?service=icu-setup" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">ICU Home Setup</a>
+        <a href="service-details.html?service=post-op-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Post-Op Care</a>
+        <a href="service-details.html?service=specialized-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Specialized Care</a>
+        <a href="service-details.html?service=injection-visit" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Injection Visit</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-link" onclick="toggleMobileMenu()">Contact</a> 
     <a href="login.html" class="nav-link" onclick="toggleMobileMenu()">Login</a>
-    <a href="index.html#contact" class="nav-cta" onclick="toggleMobileMenu()">Get Quote</a>
+    <a href="contact.html" class="nav-cta" onclick="toggleMobileMenu()">Get Quote</a>
     <div class="mobile-socials">
      <a href="#"><i class="fab fa-facebook-f"></i></a>
      <a href="#"><i class="fab fa-instagram"></i></a>
@@ -61,7 +86,7 @@
        <!-- Dynamic details will appear here -->
       </div>
       <div class="mt-12">
-        <a href="index.html#contact" class="btn-book">
+        <a href="contact.html" class="btn-book">
          <i class="fas fa-calendar-check mr-2"></i> Book This Service </a>
       </div>
      </div>
@@ -70,7 +95,7 @@
    <footer class="footer">
     <div class="footer-content">
      <div class="text-sm text-gray-500">
-      © 2026 Maaseva Healthcare. All rights reserved.
+      © 2026 Maasewa Healthcare. All rights reserved.
      </div>
      <div class="flex gap-6 text-sm text-gray-500"><a href="#" class="hover:text-[#00d4aa]">Privacy Policy</a> <a href="#" class="hover:text-[#00d4aa]">Terms of Service</a>
      </div>

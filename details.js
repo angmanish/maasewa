@@ -63,7 +63,7 @@ if (data) {
         if (imageBox) imageBox.style.display = 'block';
     }
     
-    document.title = `${data.title} - Maaseva Healthcare`;
+    document.title = `${data.title} - Maasewa Healthcare`;
 } else {
     if (titleEl) titleEl.innerText = 'Service Not Found';
     if (descEl) descEl.innerText = 'The requested service details could not be found.';

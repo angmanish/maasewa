@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Maasewa Healthcare</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" type="image/png" href="logo2.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-page-hero {
+      padding: 140px 2rem 60px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .map-section {
+      padding: 0 2rem 80px;
+      position: relative;
+      z-index: 10;
+    }
+    .map-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 450px;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(232, 244, 248, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(1) invert(0.9) contrast(0.8);
+      transition: all 0.5s ease;
+    }
+    .map-wrapper:hover iframe {
+      filter: grayscale(0) invert(0) contrast(1);
+    }
+  </style>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="gradient-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+   </div>
+   
+   <nav class="nav-container scrolled sticky top-0 z-50">
+    <div class="nav-inner">
+     <a href="index.html" class="logo">
+      <div class="logo-icon">
+       <img src="logo2.png" alt="M">
+      </div>
+      <span class="logo-text">Maasewa Healthcare</span>
+     </a>
+     <div class="nav-links">
+      <a href="index.html#about" class="nav-link">About</a> 
+      <div class="nav-item-dropdown">
+        <a href="index.html#services" class="nav-link">Services <i class="fas fa-chevron-down ml-1 text-[10px]"></i></a>
+        <div class="dropdown-menu">
+          <a href="service-details.html?service=nursing-staff" class="dropdown-link"><i class="fas fa-user-nurse"></i> Nursing Staff</a>
+          <a href="service-details.html?service=elder-care" class="dropdown-link"><i class="fas fa-blind"></i> Elder Care</a>
+          <a href="service-details.html?service=icu-setup" class="dropdown-link"><i class="fas fa-procedures"></i> ICU Home Setup</a>
+          <a href="service-details.html?service=post-op-care" class="dropdown-link"><i class="fas fa-heartbeat"></i> Post-Operative Care</a>
+          <a href="service-details.html?service=specialized-care" class="dropdown-link"><i class="fas fa-wheelchair"></i> Specialized Care</a>
+          <a href="service-details.html?service=injection-visit" class="dropdown-link"><i class="fas fa-syringe"></i> Injection Visit</a>
+        </div>
+      </div>
+      <a href="contact.html" class="nav-link active">Contact</a>
+     </div>
+     <div class="flex items-center gap-4">
+      <a href="login.html" class="nav-login-icon" title="Login">
+       <i class="fas fa-user"></i>
+      </a>
+      <a href="contact.html" class="nav-cta hidden sm:flex">Get Quote</a>
+      <button class="mobile-toggle" id="menuToggle" onclick="toggleMobileMenu()">
+       <div class="hamburger-bar b1"></div>
+       <div class="hamburger-bar b2"></div>
+       <div class="hamburger-bar b3"></div>
+      </button>
+     </div>
+    </div>
+   </nav>
+
+   <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" class="nav-link" onclick="toggleMobileMenu()">About</a> 
+    <div class="w-full text-center">
+      <a href="index.html#services" class="nav-link" onclick="toggleMobileMenu()">Services</a>
+      <div class="flex flex-col gap-2 mt-2 mb-4 bg-white/5 py-4 rounded-2xl">
+        <a href="service-details.html?service=nursing-staff" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Nursing Staff</a>
+        <a href="service-details.html?service=elder-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Elder Care</a>
+        <a href="service-details.html?service=icu-setup" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">ICU Home Setup</a>
+        <a href="service-details.html?service=post-op-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Post-Op Care</a>
+        <a href="service-details.html?service=specialized-care" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Specialized Care</a>
+        <a href="service-details.html?service=injection-visit" class="text-gray-400 hover:text-[#00d4aa] text-sm py-1">Injection Visit</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-link" onclick="toggleMobileMenu()">Contact</a> 
+    <a href="login.html" class="nav-link" onclick="toggleMobileMenu()">Login</a>
+    <a href="contact.html" class="nav-cta" onclick="toggleMobileMenu()">Get Quote</a>
+    <div class="mobile-socials">
+     <a href="#"><i class="fab fa-facebook-f"></i></a>
+     <a href="#"><i class="fab fa-instagram"></i></a>
+     <a href="https://wa.me/916361376521"><i class="fab fa-whatsapp"></i></a>
+    </div>
+   </div>
+
+   <section class="contact-page-hero">
+     <span class="section-label">Connect with Us</span>
+     <h1 class="hero-title">Get in <span class="hero-title-accent">Touch</span></h1>
+     <p class="hero-subtitle">We are here to support you and your family 24/7. Reach out for any inquiries or care requirements.</p>
+   </section>
+
+   <section class="contact-section !pt-0" id="contact">
+    <div class="contact-container">
+     <div class="contact-content">
+      <h2 class="section-title">Contact Information</h2>
+      <p class="section-text">Our dedicated team is ready to provide the compassionate care your loved ones deserve. Visit us or reach out through any of the channels below.</p>
+      <div class="contact-info">
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-phone-alt"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">Phone</div>
+         <div class="contact-card-text"><a href="tel:+916361376521" class="hover:text-[#00d4aa] transition-colors">+91 6361376521</a></div>
+        </div>
+       </div>
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-envelope"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">Email</div>
+         <div class="contact-card-text"><a href="mailto:info@maasewahealthcare.com" class="hover:text-[#00d4aa] transition-colors">info@maasewahealthcare.com</a></div>
+        </div>
+       </div>
+       <div class="contact-card">
+        <div class="contact-icon">
+         <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div>
+         <div class="contact-card-title">Location</div>
+         <div class="contact-card-text">gate no 1313, om sai housing society near zenda chowk,pune,411062</div>
+        </div>
+       </div>
+       <div class="contact-socials">
+        <a href="https://www.facebook.com/profile.php?id=61578668799642" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/maasewa/" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/Maasewa_care" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+       </div>
+      </div>
+     </div>
+     <div class="contact-form-wrapper">
+      <h3 class="form-title">Request a Callback</h3>
+      <p class="form-subtitle">Fill in your details and we'll get back to you shortly.</p>
+      <form id="enquiryForm" action="https://api.web3forms.com/submit" method="POST">
+       <input type="hidden" name="access_key" value="b1955e71-d374-4f03-ae4e-f6249aa638ef">
+       <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="firstName">First Name</label> 
+          <input type="text" name="first_name" id="firstName" class="form-input" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lastName">Last Name</label> 
+          <input type="text" name="last_name" id="lastName" class="form-input" placeholder="Last Name" required>
+        </div>
+       </div>
+       <div class="form-group">
+         <label class="form-label" for="email">Email Address</label> 
+         <input type="email" name="email" id="email" class="form-input" placeholder="xyz@example.com" required>
+       </div>
+       <div class="form-group">
+         <label class="form-label" for="phone">Phone Number</label> 
+         <input type="tel" name="phone" id="phone" class="form-input" placeholder="Phone Number" required>
+       </div>
+       <div class="form-group">
+         <label class="form-label" for="message">How can we help?</label> 
+         <textarea name="message" id="message" class="form-input" placeholder="Tell us about your care requirements..."></textarea>
+       </div>
+       <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane mr-2"></i> Send Message 
+       </button>
+       <div id="result"></div>
+      </form>
+     </div>
+    </div>
+   </section>
+
+   <section class="map-section">
+     <div class="map-wrapper">
+       <iframe 
+        src="https://maps.google.com/maps?q=gate%20no%201313,%20om%20sai%20housing%20society%20near%20zenda%20chowk,pune,411062&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+       </iframe>
+     </div>
+   </section>
+
+   <footer class="footer">
+    <div class="footer-content">
+     <div class="footer-text">
+      © 2026 Maasewa Healthcare. All rights reserved.
+     </div>
+     <div class="footer-links">
+       <a href="#" class="footer-link">Privacy Policy</a> 
+       <a href="#" class="footer-link">Terms of Service</a>
+       <a href="index.html" class="footer-link">Home</a>
+     </div>
+    </div>
+   </footer>
+
+    <a href="https://wa.me/916361376521?text=Hi, I'm interested in your services." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.getElementById('menuToggle');
+        if (menu) menu.classList.toggle('active');
+        if (toggle) toggle.classList.toggle('active');
+    }
+
+    // Form submission
+    const form = document.getElementById('enquiryForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+      result.innerHTML = "Please wait...";
+
+      fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+              },
+              body: json
+          })
+          .then(async (response) => {
+              let json = await response.json();
+              if (response.status == 200) {
+                  result.innerHTML = "Message sent successfully!";
+                  result.classList.add('text-green-500');
+                  form.reset();
+              } else {
+                  console.log(response);
+                  result.innerHTML = json.message;
+                  result.classList.add('text-red-500');
+              }
+          })
+          .catch(error => {
+              console.log(error);
+              result.innerHTML = "Something went wrong!";
+          })
+          .then(function() {
+              setTimeout(() => {
+                  result.innerHTML = "";
+              }, 5000);
+          });
+    });
+  </script>
+ </body>
+</html>
